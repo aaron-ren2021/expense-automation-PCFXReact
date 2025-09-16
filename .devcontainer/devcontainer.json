@@ -1,0 +1,26 @@
+{
+  "name": "Power Apps PCF Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": { "version": "8.0" }
+  },
+  "postCreateCommand": [
+    "dotnet tool install -g Microsoft.PowerApps.CLI",
+    "echo 'export PATH=\"$PATH:$HOME/.dotnet/tools\"' >> ~/.bashrc"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-powerplatform.pac-cli",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "PP_ENV_URL": "${PP_ENV_URL}",
+    "PP_TENANT_ID": "${PP_TENANT_ID}",
+    "PP_APP_ID": "${PP_APP_ID}",
+    "PP_CLIENT_SECRET": "${PP_CLIENT_SECRET}"
+  }
+}
