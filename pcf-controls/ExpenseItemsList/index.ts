@@ -77,7 +77,7 @@ export class ExpenseItemsList implements ComponentFramework.StandardControl<IInp
         const items: IExpenseItem[] = [];
         
         if (this._context.parameters.items && this._context.parameters.items.sortedRecordIds) {
-            this._context.parameters.items.sortedRecordIds.forEach((recordId) => {
+            this._context.parameters.items.sortedRecordIds.forEach((recordId: string) => {
                 const record = this._context.parameters.items.records[recordId];
                 if (record) {
                     const item: IExpenseItem = {
