@@ -10,9 +10,11 @@
     "start": "cd pcf-controls/ExpenseItemsList && npm start",
     "test": "cd pcf-controls/ExpenseItemsList && npm test",
     "lint": "cd pcf-controls/ExpenseItemsList && npm run lint",
+    "lint:fix": "cd pcf-controls/ExpenseItemsList && npm run lint:fix",
     "setup": "bash scripts/setup-project.sh",
     "package": "bash scripts/package-solution.sh",
-    "deploy": "bash scripts/deploy-solution.sh"
+    "deploy": "bash scripts/deploy-solution.sh",
+    "validate": "bash scripts/validate-build.sh"
   },
   "keywords": [
     "powerapps",
