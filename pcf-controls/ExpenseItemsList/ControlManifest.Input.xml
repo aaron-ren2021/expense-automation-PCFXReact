@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="ExpenseAutomation" constructor="ExpenseItemsList" version="1.0.0" display-name-key="ExpenseItemsList" description-key="ExpenseItemsList description" control-type="standard">
+    <!-- Data set node represents a set of entity records on CDS -->
+    <data-set name="items" display-name-key="Expense Items" description-key="List of expense items">
+      <property-set name="title" display-name-key="Title" description-key="Expense title" of-type="SingleLine.Text" usage="bound" required="true" />
+      <property-set name="description" display-name-key="Description" description-key="Expense description" of-type="SingleLine.TextArea" usage="bound" required="false" />
+      <property-set name="amount" display-name-key="Amount" description-key="Expense amount" of-type="Currency" usage="bound" required="true" />
+      <property-set name="currency" display-name-key="Currency" description-key="Currency code" of-type="SingleLine.Text" usage="bound" required="true" />
+      <property-set name="date" display-name-key="Date" description-key="Expense date" of-type="DateAndTime.DateOnly" usage="bound" required="true" />
+      <property-set name="category" display-name-key="Category" description-key="Expense category" of-type="SingleLine.Text" usage="bound" required="true" />
+      <property-set name="status" display-name-key="Status" description-key="Expense status" of-type="OptionSet" usage="bound" required="true" />
+      <property-set name="vendor" display-name-key="Vendor" description-key="Vendor name" of-type="SingleLine.Text" usage="bound" required="false" />
+      <property-set name="receipturl" display-name-key="Receipt URL" description-key="Receipt URL" of-type="SingleLine.URL" usage="bound" required="false" />
+    </data-set>
+    
+    <!-- Property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="selectedItem" display-name-key="Selected Item" description-key="Currently selected expense item" of-type="SingleLine.Text" usage="bound" required="false" />
+    <property name="theme" display-name-key="Theme" description-key="Visual theme for the control" of-type="Enum" usage="input" required="false" default-value="default">
+      <value name="default" display-name-key="Default" description-key="Default theme">default</value>
+      <value name="dark" display-name-key="Dark" description-key="Dark theme">dark</value>
+      <value name="light" display-name-key="Light" description-key="Light theme">light</value>
+    </property>
+    <property name="allowMultiSelect" display-name-key="Allow Multi Select" description-key="Allow multiple item selection" of-type="TwoOptions" usage="input" required="false" default-value="false" />
+    
+    <!-- Resource node identifies a resource file -->
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/ExpenseItemsList.css" order="1" />
+      <resx path="strings/ExpenseItemsList.1033.resx" version="1.0.0" />
+    </resources>
+    
+    <!-- Feature node identifies a feature that the control requires -->
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="false" />
+      <uses-feature name="Device.captureImage" required="false" />
+      <uses-feature name="Device.captureVideo" required="false" />
+      <uses-feature name="Device.getBarcodeValue" required="false" />
+      <uses-feature name="Device.getCurrentPosition" required="false" />
+      <uses-feature name="Device.pickFile" required="false" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="false" />
+    </feature-usage>
+  </control>
+</manifest>

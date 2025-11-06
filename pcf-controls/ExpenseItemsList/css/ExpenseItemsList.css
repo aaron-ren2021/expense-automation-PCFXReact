@@ -1,0 +1,291 @@
+/* Base styles for the expense items list control */
+.expense-items-list {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.expense-items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.expense-items-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.selection-count {
+    font-size: 14px;
+    color: #6b7280;
+    background-color: #f3f4f6;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.no-items {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.no-items p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.expense-items-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 6px;
+}
+
+.expense-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+}
+
+.expense-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.expense-item.selected {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.checkbox-container {
+    margin-right: 12px;
+    padding-top: 2px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.expense-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.expense-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.expense-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.4;
+}
+
+.expense-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: #059669;
+    white-space: nowrap;
+    margin-left: 12px;
+}
+
+.expense-description {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.expense-item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.expense-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.expense-meta span {
+    font-size: 12px;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.expense-status {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.expense-receipt {
+    margin-top: 8px;
+}
+
+.expense-receipt a {
+    font-size: 12px;
+    color: #3b82f6;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.expense-receipt a:hover {
+    text-decoration: underline;
+}
+
+/* Dark theme */
+.expense-items-list.dark {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #ffffff;
+}
+
+.expense-items-list.dark .expense-items-header h3 {
+    color: #ffffff;
+}
+
+.expense-items-list.dark .expense-items-header {
+    border-bottom-color: #374151;
+}
+
+.expense-items-list.dark .selection-count {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+.expense-items-list.dark .no-items {
+    color: #9ca3af;
+}
+
+.expense-items-list.dark .expense-item {
+    background-color: #374151;
+    border-color: #4b5563;
+}
+
+.expense-items-list.dark .expense-item:hover {
+    border-color: #60a5fa;
+    box-shadow: 0 2px 4px rgba(96, 165, 250, 0.1);
+}
+
+.expense-items-list.dark .expense-item.selected {
+    background-color: #1e3a8a;
+    border-color: #60a5fa;
+}
+
+.expense-items-list.dark .expense-title {
+    color: #ffffff;
+}
+
+.expense-items-list.dark .expense-description {
+    color: #d1d5db;
+}
+
+.expense-items-list.dark .expense-meta span {
+    background-color: #4b5563;
+    color: #d1d5db;
+}
+
+/* Light theme (explicit) */
+.expense-items-list.light {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+}
+
+.expense-items-list.light .expense-item {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .expense-items-list {
+        padding: 12px;
+    }
+    
+    .expense-item {
+        padding: 12px;
+    }
+    
+    .expense-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .expense-amount {
+        margin-left: 0;
+    }
+    
+    .expense-meta {
+        gap: 8px;
+    }
+    
+    .expense-meta span {
+        font-size: 11px;
+    }
+}
+
+/* Focus styles for accessibility */
+.expense-item:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.checkbox-container input[type="checkbox"]:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+}
+
+/* Animation for selection changes */
+.expense-item {
+    transform: translateZ(0);
+}
+
+.expense-item.selected {
+    animation: selectItem 0.2s ease-out;
+}
+
+@keyframes selectItem {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

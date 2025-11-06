@@ -1,0 +1,201 @@
+name: Build and Release Power Apps Solution
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '20'
+  DOTNET_VERSION: '8.0.x'
+
+jobs:
+  build-pcf:
+    name: Build PCF Controls
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Install Power Platform CLI
+      run: |
+        npm install -g @microsoft/powerapps-cli
+        npm install -g pcf-scripts
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        cd pcf-controls/ExpenseItemsList
+        npm install
+    
+    - name: Lint PCF control
+      run: |
+        cd pcf-controls/ExpenseItemsList
+        npm run lint
+      continue-on-error: true
+    
+    - name: Build PCF control
+      run: |
+        cd pcf-controls/ExpenseItemsList
+        npm run build
+    
+    - name: Upload PCF artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: pcf-controls
+        path: pcf-controls/ExpenseItemsList/out/
+        retention-days: 30
+
+  build-solution:
+    name: Build Power Platform Solution
+    runs-on: ubuntu-latest
+    needs: build-pcf
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Install Power Platform CLI
+      run: |
+        npm install -g @microsoft/powerapps-cli
+        npm install -g pcf-scripts
+    
+    - name: Download PCF artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: pcf-controls
+        path: pcf-controls/ExpenseItemsList/out/
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        cd pcf-controls/ExpenseItemsList
+        npm install
+    
+    - name: Create solution structure
+      run: |
+        bash scripts/setup-project.sh
+      continue-on-error: true
+    
+    - name: Build solution
+      run: |
+        bash scripts/build-solution.sh
+      continue-on-error: true
+    
+    - name: Package solution
+      run: |
+        bash scripts/package-solution.sh
+      continue-on-error: true
+    
+    - name: Upload solution artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: power-platform-solution
+        path: |
+          dist/*.zip
+        retention-days: 90
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build-pcf, build-solution]
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Download solution artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: power-platform-solution
+        path: dist/
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/*.zip
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        body: |
+          ## Expense Automation Power Apps Solution ${{ github.ref_name }}
+          
+          ### What's included:
+          - ✅ ExpenseItemsList PCF React control
+          - ✅ Managed Power Platform solution
+          - ✅ Unmanaged solution for development
+          
+          ### Installation:
+          1. Download `ExpenseAutomationSolution_managed.zip`
+          2. Import into your Power Platform environment
+          3. Add the ExpenseItemsList control to your Power Apps
+          
+          ### Documentation:
+          See README.md for detailed setup and usage instructions.
+        draft: false
+        prerelease: contains(github.ref_name, '-')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-dev:
+    name: Deploy to Development Environment
+    runs-on: ubuntu-latest
+    needs: build-solution
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: development
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Install Power Platform CLI
+      run: npm install -g @microsoft/powerapps-cli
+    
+    - name: Download solution artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: power-platform-solution
+        path: dist/
+    
+    - name: Deploy to Development
+      run: |
+        echo "🚀 Deploying to development environment..."
+        # pac auth create --tenant-id ${{ secrets.TENANT_ID }} --application-id ${{ secrets.CLIENT_ID }} --client-secret ${{ secrets.CLIENT_SECRET }}
+        # pac solution import --path dist/ExpenseAutomationSolution_managed.zip --environment-url ${{ secrets.DEV_ENVIRONMENT_URL }}
+        echo "⚠️ Deployment requires environment secrets to be configured"
+      env:
+        TENANT_ID: ${{ secrets.TENANT_ID }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        DEV_ENVIRONMENT_URL: ${{ secrets.DEV_ENVIRONMENT_URL }}
