@@ -1,0 +1,36 @@
+{
+  "name": "expense-automation-pcf-react",
+  "version": "1.0.0",
+  "description": "Expense/Invoice Request Power Apps solution with PCF React controls",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:pcf && npm run build:solution",
+    "build:pcf": "cd pcf-controls/ExpenseItemsList && npm run build",
+    "build:solution": "bash scripts/build-solution.sh",
+    "start": "cd pcf-controls/ExpenseItemsList && npm start",
+    "test": "cd pcf-controls/ExpenseItemsList && npm test",
+    "lint": "cd pcf-controls/ExpenseItemsList && npm run lint",
+    "lint:fix": "cd pcf-controls/ExpenseItemsList && npm run lint:fix",
+    "setup": "bash scripts/setup-project.sh",
+    "package": "bash scripts/package-solution.sh",
+    "deploy": "bash scripts/deploy-solution.sh",
+    "validate": "bash scripts/validate-build.sh"
+  },
+  "keywords": [
+    "powerapps",
+    "pcf",
+    "react",
+    "expense",
+    "automation"
+  ],
+  "author": "Power Apps Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  }
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "expense-001",
+    "title": "Business Lunch with Client",
+    "description": "Lunch meeting with potential client to discuss project requirements",
+    "amount": 125.50,
+    "currency": "USD",
+    "date": "2024-01-15T12:00:00Z",
+    "category": "Meals & Entertainment",
+    "status": "Pending",
+    "vendor": "The Downtown Bistro",
+    "receipturl": "https://example.com/receipts/receipt-001.pdf"
+  },
+  {
+    "id": "expense-002", 
+    "title": "Flight to Conference",
+    "description": "Round-trip flight to attend industry conference in San Francisco",
+    "amount": 650.00,
+    "currency": "USD",
+    "date": "2024-01-20T08:30:00Z",
+    "category": "Travel",
+    "status": "Approved",
+    "vendor": "United Airlines",
+    "receipturl": "https://example.com/receipts/receipt-002.pdf"
+  },
+  {
+    "id": "expense-003",
+    "title": "Hotel Accommodation",
+    "description": "3 nights hotel stay during conference",
+    "amount": 450.00,
+    "currency": "USD", 
+    "date": "2024-01-20T15:00:00Z",
+    "category": "Travel",
+    "status": "Approved",
+    "vendor": "Hilton San Francisco",
+    "receipturl": "https://example.com/receipts/receipt-003.pdf"
+  },
+  {
+    "id": "expense-004",
+    "title": "Office Supplies",
+    "description": "Notebooks, pens, and sticky notes for team",
+    "amount": 75.25,
+    "currency": "USD",
+    "date": "2024-01-18T10:15:00Z", 
+    "category": "Office Supplies",
+    "status": "Pending",
+    "vendor": "Staples",
+    "receipturl": "https://example.com/receipts/receipt-004.pdf"
+  },
+  {
+    "id": "expense-005",
+    "title": "Software License",
+    "description": "Annual subscription for project management software",
+    "amount": 299.99,
+    "currency": "USD",
+    "date": "2024-01-10T09:00:00Z",
+    "category": "Software",
+    "status": "Rejected", 
+    "vendor": "Atlassian",
+    "receipturl": "https://example.com/receipts/receipt-005.pdf"
+  },
+  {
+    "id": "expense-006",
+    "title": "Taxi to Airport",
+    "description": "Transportation to airport for business trip",
+    "amount": 35.00,
+    "currency": "USD",
+    "date": "2024-01-20T06:00:00Z",
+    "category": "Transportation",
+    "status": "Pending",
+    "vendor": "Yellow Cab Co.",
+    "receipturl": ""
+  },
+  {
+    "id": "expense-007",
+    "title": "Team Dinner",
+    "description": "Dinner with remote team members during company meetup",
+    "amount": 180.75,
+    "currency": "USD",
+    "date": "2024-01-22T19:30:00Z",
+    "category": "Meals & Entertainment", 
+    "status": "Approved",
+    "vendor": "Roof Top Restaurant",
+    "receipturl": "https://example.com/receipts/receipt-007.pdf"
+  },
+  {
+    "id": "expense-008",
+    "title": "Mobile Phone Bill",
+    "description": "Monthly business mobile phone charges",
+    "amount": 85.00,
+    "currency": "USD",
+    "date": "2024-01-01T00:00:00Z",
+    "category": "Communications",
+    "status": "Approved",
+    "vendor": "Verizon Wireless",
+    "receipturl": "https://example.com/receipts/receipt-008.pdf"
+  }
+]
