@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>請款單 — Mondrian Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════════
+       Root & Reset
+    ══════════════════════════════════════ */
+    :root {
+      --mondrian-red: #ED1C24;
+      --mondrian-blue: #0057B7;
+      --mondrian-yellow: #FFDE00;
+      --mondrian-black: #000000;
+      --mondrian-white: #FFFFFF;
+      --mondrian-light-gray: #F5F5F5;
+      --mondrian-border: 3px solid var(--mondrian-black);
+      --font-family: 'Open Sans', sans-serif;
+      --header-height: 64px;
+      --max-width: 1200px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-family);
+      background: var(--mondrian-white);
+      color: var(--mondrian-black);
+      min-height: 100vh;
+    }
+
+    /* ══════════════════════════════════════
+       Screen Container (SPA)
+    ══════════════════════════════════════ */
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: flex; flex-direction: column; }
+
+    /* ══════════════════════════════════════
+       Header — Mondrian composition
+    ══════════════════════════════════════ */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      height: var(--header-height);
+      border-bottom: var(--mondrian-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header__block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: var(--mondrian-border);
+      min-width: 64px;
+      cursor: pointer;
+      transition: filter 0.15s;
+    }
+    .header__block:hover { filter: brightness(0.9); }
+    .header__block:last-child { border-right: none; border-left: var(--mondrian-border); }
+    .header__block--red { background: var(--mondrian-red); }
+    .header__block--blue { background: var(--mondrian-blue); }
+    .header__block--yellow { background: var(--mondrian-yellow); }
+    .header__block--white { background: var(--mondrian-white); }
+
+    .header__title-area {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: var(--mondrian-blue);
+      min-width: 0;
+    }
+    .header__title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--mondrian-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header__actions {
+      display: flex;
+      height: 100%;
+    }
+    .header__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 100%;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      transition: filter 0.15s;
+      border-left: var(--mondrian-border);
+    }
+    .header__btn:hover { filter: brightness(0.85); }
+    .header__btn svg { width: 22px; height: 22px; }
+
+    /* ── Browse Header ── */
+    .header--browse { grid-template-columns: 64px 1fr auto; }
+    .header--browse .header__actions { background: var(--mondrian-blue); }
+    .header--browse .header__actions .header__btn { color: var(--mondrian-white); }
+    .header--browse .header__actions .header__btn:last-child {
+      background: var(--mondrian-yellow);
+      color: var(--mondrian-black);
+    }
+
+    /* ── Detail Header ── */
+    .header--detail { grid-template-columns: 64px 1fr auto; }
+    .header--detail .header__actions { background: var(--mondrian-blue); }
+    .header--detail .header__actions .header__btn--delete { background: var(--mondrian-red); color: var(--mondrian-white); }
+    .header--detail .header__actions .header__btn--edit { background: var(--mondrian-yellow); color: var(--mondrian-black); }
+
+    /* ── Edit Header ── */
+    .header--edit { grid-template-columns: 64px 1fr auto; }
+    .header--edit .header__actions .header__btn--cancel { background: var(--mondrian-red); color: var(--mondrian-white); }
+    .header--edit .header__actions .header__btn--submit { background: var(--mondrian-yellow); color: var(--mondrian-black); }
+
+    /* ══════════════════════════════════════
+       Decorative Mondrian stripe (top)
+    ══════════════════════════════════════ */
+    .mondrian-stripe {
+      display: grid;
+      grid-template-columns: 3fr 1fr 2fr;
+      height: 8px;
+      border-bottom: var(--mondrian-border);
+    }
+    .mondrian-stripe__seg--red { background: var(--mondrian-red); }
+    .mondrian-stripe__seg--yellow { background: var(--mondrian-yellow); border-left: var(--mondrian-border); border-right: var(--mondrian-border); }
+    .mondrian-stripe__seg--blue { background: var(--mondrian-blue); }
+
+    /* ══════════════════════════════════════
+       Search bar
+    ══════════════════════════════════════ */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      border-bottom: var(--mondrian-border);
+      background: var(--mondrian-white);
+    }
+    .search-bar__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      flex-shrink: 0;
+      color: var(--mondrian-blue);
+    }
+    .search-bar__icon svg { width: 20px; height: 20px; }
+    .search-bar__input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      padding: 14px 12px 14px 0;
+      background: transparent;
+    }
+    .search-bar__input::placeholder { color: #999; }
+    .search-bar__input:focus { background: rgba(255, 222, 0, 0.08); }
+
+    /* ══════════════════════════════════════
+       Gallery list
+    ══════════════════════════════════════ */
+    .gallery { flex: 1; overflow-y: auto; }
+    .gallery__item {
+      display: grid;
+      grid-template-columns: 6px 1fr 44px;
+      border-bottom: var(--mondrian-border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .gallery__item:hover { background: rgba(255, 222, 0, 0.1); }
+    .gallery__item.selected .gallery__indicator { background: var(--mondrian-red); }
+    .gallery__indicator {
+      background: transparent;
+      transition: background 0.2s;
+    }
+    .gallery__content {
+      padding: 14px 12px;
+      min-width: 0;
+    }
+    .gallery__title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .gallery__subtitle, .gallery__body {
+      font-size: 0.82rem;
+      color: #555;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .gallery__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mondrian-blue);
+    }
+    .gallery__arrow svg { width: 18px; height: 18px; }
+
+    /* ══════════════════════════════════════
+       Form card (Detail & Edit)
+    ══════════════════════════════════════ */
+    .form-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 0 40px;
+    }
+    .form-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Responsive 2-column on desktop */
+    @media (min-width: 768px) {
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .form-grid .data-card { border-right: var(--mondrian-border); }
+      .form-grid .data-card:nth-child(2n) { border-right: none; }
+      .form-grid .data-card--full { grid-column: 1 / -1; border-right: none; }
+    }
+
+    .data-card {
+      padding: 16px 20px;
+      border-bottom: var(--mondrian-border);
+      position: relative;
+    }
+    .data-card__label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--mondrian-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+    .data-card__label .required {
+      color: var(--mondrian-red);
+      margin-left: 2px;
+    }
+    .data-card__value {
+      font-size: 0.95rem;
+      color: var(--mondrian-black);
+      word-break: break-word;
+    }
+    .data-card__value:empty::after {
+      content: '—';
+      color: #ccc;
+    }
+
+    /* ── Form inputs (Edit mode) ── */
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      border: 2px solid var(--mondrian-black);
+      background: var(--mondrian-white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--mondrian-blue);
+      box-shadow: 0 0 0 2px rgba(0, 87, 183, 0.15);
+    }
+    .form-input:hover { background: rgba(255, 222, 0, 0.06); }
+
+    select.form-input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%230057B7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    textarea.form-input { resize: vertical; min-height: 80px; }
+
+    .form-row { display: flex; gap: 10px; }
+    .form-row > * { flex: 1; }
+
+    /* File drop zone */
+    .file-drop {
+      border: 2px dashed var(--mondrian-black);
+      padding: 20px;
+      text-align: center;
+      color: #888;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .file-drop:hover {
+      background: rgba(0, 87, 183, 0.05);
+      border-color: var(--mondrian-blue);
+    }
+    .file-drop svg { width: 32px; height: 32px; margin-bottom: 8px; color: var(--mondrian-blue); }
+
+    /* ══════════════════════════════════════
+       Mondrian corner decoration
+    ══════════════════════════════════════ */
+    .mondrian-corner {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      border-top: var(--mondrian-border);
+      border-left: var(--mondrian-border);
+      z-index: 50;
+      pointer-events: none;
+    }
+    .mondrian-corner > div:nth-child(1) { background: var(--mondrian-red); border-right: var(--mondrian-border); border-bottom: var(--mondrian-border); }
+    .mondrian-corner > div:nth-child(2) { background: var(--mondrian-white); border-bottom: var(--mondrian-border); }
+    .mondrian-corner > div:nth-child(3) { background: var(--mondrian-yellow); border-right: var(--mondrian-border); }
+    .mondrian-corner > div:nth-child(4) { background: var(--mondrian-blue); }
+
+    /* ══════════════════════════════════════
+       Responsive tweaks
+    ══════════════════════════════════════ */
+    @media (min-width: 768px) {
+      :root { --header-height: 72px; }
+      .header__block { min-width: 72px; }
+      .header__title { font-size: 1.5rem; }
+      .header__btn { width: 64px; }
+      .header__btn svg { width: 24px; height: 24px; }
+      .gallery__item { grid-template-columns: 6px 1fr 50px; }
+      .gallery__content { padding: 18px 16px; }
+      .mondrian-corner { width: 100px; height: 100px; }
+    }
+
+    @media (min-width: 1024px) {
+      .gallery__list {
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+    }
+
+    /* ══════════════════════════════════════
+       Toast notification
+    ══════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--mondrian-black);
+      color: var(--mondrian-white);
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ══════════════════════════════════════
+       Animations
+    ══════════════════════════════════════ */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .screen.active { animation: slideIn 0.25s ease-out; }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════
+       SCREEN 1: BrowseScreen (List)
+  ════════════════════════════════════ -->
+  <div id="browseScreen" class="screen active">
+    <header class="header header--browse">
+      <div class="header__block header__block--red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <div class="header__title-area">
+        <span class="header__title">請款單</span>
+      </div>
+      <div class="header__actions">
+        <button class="header__btn" onclick="refreshData()" title="重新整理">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+        <button class="header__btn" onclick="toggleSort()" title="排序">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M11 5h10M11 9h7M11 13h4"/><path d="M3 17l4 4 4-4"/><path d="M7 3v18"/></svg>
+        </button>
+        <button class="header__btn" onclick="navigateTo('edit', null)" title="新增請款單" style="background:var(--mondrian-yellow);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="mondrian-stripe">
+      <div class="mondrian-stripe__seg--red"></div>
+      <div class="mondrian-stripe__seg--yellow"></div>
+      <div class="mondrian-stripe__seg--blue"></div>
+    </div>
+
+    <div class="search-bar">
+      <div class="search-bar__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <input class="search-bar__input" id="searchInput" type="text" placeholder="搜尋項目…" oninput="filterGallery()">
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       SCREEN 2: DetailScreen (View)
+  ════════════════════════════════════ -->
+  <div id="detailScreen" class="screen">
+    <header class="header header--detail">
+      <div class="header__block header__block--blue" onclick="navigateTo('browse')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="header__title-area">
+        <span class="header__title">請款單 — 詳細</span>
+      </div>
+      <div class="header__actions">
+        <button class="header__btn header__btn--delete" onclick="deleteItem()" title="刪除">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        </button>
+        <button class="header__btn header__btn--edit" onclick="navigateTo('edit', currentSelectedIndex)" title="編輯">
+          <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="mondrian-stripe">
+      <div class="mondrian-stripe__seg--blue"></div>
+      <div class="mondrian-stripe__seg--red"></div>
+      <div class="mondrian-stripe__seg--yellow"></div>
+    </div>
+
+    <div class="form-area">
+      <div class="form-grid" id="detailFormGrid"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       SCREEN 3: EditScreen (Create/Edit)
+  ════════════════════════════════════ -->
+  <div id="editScreen" class="screen">
+    <header class="header header--edit">
+      <div class="header__block header__block--blue" onclick="navigateTo('browse')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="header__title-area">
+        <span class="header__title" id="editScreenTitle">請款單 — 新增</span>
+      </div>
+      <div class="header__actions">
+        <button class="header__btn header__btn--cancel" onclick="cancelEdit()" title="取消">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button class="header__btn header__btn--submit" onclick="submitForm()" title="送出">
+          <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="mondrian-stripe">
+      <div class="mondrian-stripe__seg--yellow"></div>
+      <div class="mondrian-stripe__seg--blue"></div>
+      <div class="mondrian-stripe__seg--red"></div>
+    </div>
+
+    <div class="form-area">
+      <div class="form-grid" id="editFormGrid"></div>
+    </div>
+  </div>
+
+  <!-- Mondrian corner decoration -->
+  <div class="mondrian-corner"><div></div><div></div><div></div><div></div></div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    'use strict';
+
+    /* ══════════════════════════════════════
+       Mock Data
+    ══════════════════════════════════════ */
+    const FIELDS = [
+      { key: '申請人',          label: '申請人',          type: 'select',   options: ['王小明', '李大華', '陳美麗', '張志偉', '林佳蓉'] },
+      { key: '性質',            label: '性質',            type: 'select',   options: ['專案費用', '差旅費', '交際費', '辦公用品', '其他'] },
+      { key: '請款說明',        label: '請款說明',        type: 'textarea' },
+      { key: '付款方式',        label: '付款方式',        type: 'select',   options: ['匯款', '支票', '現金'] },
+      { key: '實付總額',        label: '實付總額(新台幣)', type: 'number' },
+      { key: '匯款期限日',      label: '匯款期限日',      type: 'datetime' },
+      { key: '支票到期日',      label: '支票到期日',      type: 'datetime' },
+      { key: '預計結案日',      label: '預計結案日',      type: 'date',     editOnly: true },
+      { key: '銀行名稱',        label: '銀行名稱',        type: 'text' },
+      { key: '案號',            label: '案號',            type: 'text' },
+      { key: '受款人姓名',      label: '受款人姓名',      type: 'text' },
+      { key: '銀行代碼',        label: '銀行代碼',        type: 'text',     editOnly: true },
+      { key: '銀行帳號',        label: '銀行帳號',        type: 'text',     editOnly: true },
+      { key: '核銷單據',        label: '核銷單據',        type: 'select',   options: ['發票', '收據', '匯款單', '其他'], editOnly: true },
+      { key: '受款人支票抬頭',  label: '受款人/支票抬頭', type: 'text' },
+      { key: '預計核銷日期',    label: '預計核銷日期',    type: 'datetime', editOnly: true },
+      { key: '附件',            label: '附件',            type: 'file',     editOnly: true },
+    ];
+
+    let mockData = [
+      { id: 1, 申請人: '王小明', 性質: '專案費用', 請款說明: 'Q1 專案開發外包費用', 付款方式: '匯款', 實付總額: 150000, 匯款期限日: '2026-04-15T10:00', 支票到期日: '', 預計結案日: '2026-06-30', 銀行名稱: '台灣銀行', 案號: 'PRJ-2026-001', 受款人姓名: '王小明', 銀行代碼: '004', 銀行帳號: '012345678901', 核銷單據: '發票', 受款人支票抬頭: '', 預計核銷日期: '2026-05-01T09:00', 附件: null },
+      { id: 2, 申請人: '李大華', 性質: '差旅費', 請款說明: '台北—高雄出差 3/10~3/12', 付款方式: '現金', 實付總額: 8500, 匯款期限日: '2026-03-30T14:00', 支票到期日: '', 預計結案日: '2026-04-15', 銀行名稱: '中國信託', 案號: 'TRV-2026-012', 受款人姓名: '李大華', 銀行代碼: '822', 銀行帳號: '987654321098', 核銷單據: '收據', 受款人支票抬頭: '', 預計核銷日期: '2026-04-10T10:00', 附件: null },
+      { id: 3, 申請人: '陳美麗', 性質: '辦公用品', 請款說明: '會議室白板筆、便利貼補充', 付款方式: '匯款', 實付總額: 2340, 匯款期限日: '2026-04-01T09:00', 支票到期日: '', 預計結案日: '2026-04-05', 銀行名稱: '玉山銀行', 案號: 'OFF-2026-005', 受款人姓名: '陳美麗', 銀行代碼: '808', 銀行帳號: '112233445566', 核銷單據: '發票', 受款人支票抬頭: '', 預計核銷日期: '2026-04-03T14:30', 附件: null },
+      { id: 4, 申請人: '張志偉', 性質: '交際費', 請款說明: '客戶餐敘 — 鼎泰豐 6 人', 付款方式: '支票', 實付總額: 12600, 匯款期限日: '', 支票到期日: '2026-05-15T00:00', 預計結案日: '2026-05-30', 銀行名稱: '國泰世華', 案號: 'ENT-2026-008', 受款人姓名: '鼎泰豐股份有限公司', 銀行代碼: '013', 銀行帳號: '556677889900', 核銷單據: '發票', 受款人支票抬頭: '鼎泰豐股份有限公司', 預計核銷日期: '2026-05-20T10:00', 附件: null },
+      { id: 5, 申請人: '林佳蓉', 性質: '其他', 請款說明: '年度團建活動場地費', 付款方式: '匯款', 實付總額: 45000, 匯款期限日: '2026-05-01T16:00', 支票到期日: '', 預計結案日: '2026-05-20', 銀行名稱: '台北富邦', 案號: 'EVT-2026-003', 受款人姓名: '林佳蓉', 銀行代碼: '012', 銀行帳號: '998877665544', 核銷單據: '收據', 受款人支票抬頭: '', 預計核銷日期: '2026-05-10T11:00', 附件: null },
+    ];
+
+    let currentSelectedIndex = null;
+    let sortDescending = false;
+
+    /* ══════════════════════════════════════
+       Navigation
+    ══════════════════════════════════════ */
+    function navigateTo(screen, index) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+      if (screen === 'browse') {
+        document.getElementById('browseScreen').classList.add('active');
+        renderGallery();
+      } else if (screen === 'detail') {
+        currentSelectedIndex = index;
+        document.getElementById('detailScreen').classList.add('active');
+        renderDetail(index);
+      } else if (screen === 'edit') {
+        document.getElementById('editScreen').classList.add('active');
+        const titleEl = document.getElementById('editScreenTitle');
+        if (index !== null && index !== undefined) {
+          titleEl.textContent = '請款單 — 編輯';
+          renderEditForm(index);
+        } else {
+          titleEl.textContent = '請款單 — 新增';
+          renderEditForm(null);
+        }
+      }
+    }
+
+    /* ══════════════════════════════════════
+       Gallery rendering
+    ══════════════════════════════════════ */
+    function renderGallery() {
+      const gallery = document.getElementById('gallery');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      const sorted = [...mockData].sort((a, b) => {
+        const cmp = (a.申請人 || '').localeCompare(b.申請人 || '');
+        return sortDescending ? -cmp : cmp;
+      });
+
+      const filtered = sorted.filter(item =>
+        !search ||
+        (item.申請人 || '').toLowerCase().includes(search) ||
+        (item.請款說明 || '').toLowerCase().includes(search) ||
+        (item.案號 || '').toLowerCase().includes(search)
+      );
+
+      gallery.innerHTML = filtered.map((item, i) => {
+        const realIdx = mockData.indexOf(item);
+        return `
+          <div class="gallery__item ${currentSelectedIndex === realIdx ? 'selected' : ''}"
+               onclick="navigateTo('detail', ${realIdx})">
+            <div class="gallery__indicator"></div>
+            <div class="gallery__content">
+              <div class="gallery__title">${escapeHtml(item.申請人 || '')}</div>
+              <div class="gallery__subtitle">${escapeHtml(item.性質 || '')} · ${escapeHtml(item.案號 || '')}</div>
+              <div class="gallery__body">${escapeHtml(item.請款說明 || '')}</div>
+            </div>
+            <div class="gallery__arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function filterGallery() { renderGallery(); }
+    function toggleSort() {
+      sortDescending = !sortDescending;
+      renderGallery();
+      showToast(sortDescending ? '排序：Z → A' : '排序：A → Z');
+    }
+    function refreshData() {
+      renderGallery();
+      showToast('資料已重新整理');
+    }
+
+    /* ══════════════════════════════════════
+       Detail rendering
+    ══════════════════════════════════════ */
+    function renderDetail(index) {
+      const item = mockData[index];
+      if (!item) return;
+
+      const grid = document.getElementById('detailFormGrid');
+      grid.innerHTML = FIELDS
+        .filter(f => !f.editOnly)
+        .map(f => `
+          <div class="data-card">
+            <div class="data-card__label">${escapeHtml(f.label)}</div>
+            <div class="data-card__value">${formatValue(item[f.key], f.type)}</div>
+          </div>`
+        ).join('');
+    }
+
+    /* ══════════════════════════════════════
+       Edit form rendering
+    ══════════════════════════════════════ */
+    function renderEditForm(index) {
+      const item = index !== null ? { ...mockData[index] } : {};
+      const grid = document.getElementById('editFormGrid');
+
+      grid.innerHTML = FIELDS.map(f => {
+        const val = item[f.key] || '';
+        const fullClass = (f.type === 'textarea' || f.type === 'file') ? ' data-card--full' : '';
+        let input = '';
+
+        switch (f.type) {
+          case 'select':
+            input = `<select class="form-input" data-field="${f.key}">
+              <option value="">— 請選擇 —</option>
+              ${(f.options || []).map(o =>
+                `<option value="${escapeHtml(o)}" ${o === val ? 'selected' : ''}>${escapeHtml(o)}</option>`
+              ).join('')}
+            </select>`;
+            break;
+          case 'textarea':
+            input = `<textarea class="form-input" data-field="${f.key}" placeholder="請輸入${f.label}">${escapeHtml(String(val))}</textarea>`;
+            break;
+          case 'number':
+            input = `<input class="form-input" type="number" data-field="${f.key}" value="${val}" placeholder="0">`;
+            break;
+          case 'date':
+            input = `<input class="form-input" type="date" data-field="${f.key}" value="${val ? val.substring(0, 10) : ''}">`;
+            break;
+          case 'datetime':
+            input = `<input class="form-input" type="datetime-local" data-field="${f.key}" value="${val ? val.substring(0, 16) : ''}">`;
+            break;
+          case 'file':
+            input = `<div class="file-drop" onclick="this.querySelector('input').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <div>點擊或拖曳上傳附件</div>
+              <input type="file" multiple style="display:none" data-field="${f.key}">
+            </div>`;
+            break;
+          default:
+            input = `<input class="form-input" type="text" data-field="${f.key}" value="${escapeHtml(String(val))}" placeholder="請輸入${f.label}">`;
+        }
+
+        return `<div class="data-card${fullClass}">
+          <div class="data-card__label">${escapeHtml(f.label)}${f.required ? '<span class="required">*</span>' : ''}</div>
+          ${input}
+        </div>`;
+      }).join('');
+    }
+
+    /* ══════════════════════════════════════
+       Actions
+    ══════════════════════════════════════ */
+    function submitForm() {
+      const inputs = document.querySelectorAll('#editFormGrid [data-field]');
+      const titleEl = document.getElementById('editScreenTitle');
+      const isNew = titleEl.textContent.includes('新增');
+
+      const data = {};
+      inputs.forEach(el => {
+        const key = el.dataset.field;
+        if (el.type === 'file') return;
+        data[key] = el.type === 'number' ? Number(el.value) || 0 : el.value;
+      });
+
+      if (isNew) {
+        data.id = mockData.length ? Math.max(...mockData.map(d => d.id)) + 1 : 1;
+        mockData.push(data);
+        showToast('已新增請款單');
+      } else {
+        const idx = currentSelectedIndex;
+        if (idx !== null) {
+          Object.assign(mockData[idx], data);
+          showToast('已更新請款單');
+        }
+      }
+      navigateTo('browse');
+    }
+
+    function cancelEdit() { navigateTo('browse'); }
+
+    function deleteItem() {
+      if (currentSelectedIndex === null) return;
+      const item = mockData[currentSelectedIndex];
+      if (!item) return;
+      mockData.splice(currentSelectedIndex, 1);
+      currentSelectedIndex = null;
+      showToast('已刪除請款單');
+      navigateTo('browse');
+    }
+
+    /* ══════════════════════════════════════
+       Utilities
+    ══════════════════════════════════════ */
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatValue(val, type) {
+      if (val === null || val === undefined || val === '') return '';
+      if (type === 'number') return `NT$ ${Number(val).toLocaleString()}`;
+      if (type === 'datetime' || type === 'date') {
+        const d = new Date(val);
+        if (isNaN(d.getTime())) return escapeHtml(String(val));
+        return type === 'date'
+          ? d.toLocaleDateString('zh-TW')
+          : d.toLocaleString('zh-TW');
+      }
+      return escapeHtml(String(val));
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    /* ══════════════════════════════════════
+       Init
+    ══════════════════════════════════════ */
+    renderGallery();
+  </script>
+</body>
+</html>
