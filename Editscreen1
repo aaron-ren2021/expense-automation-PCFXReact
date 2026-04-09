@@ -1,46 +1,56 @@
 Screens:
   EditScreen1:
     Properties:
+      Fill: =RGBA(242, 241, 236, 1)
       LoadingSpinnerColor: =RGBA(237, 28, 36, 1)
     Children:
       - RectQuickActionBar3:
           Control: Rectangle@2.3.0
           Properties:
             BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(0, 87, 183, 1)
-            Height: =88
+            Fill: =RGBA(11, 74, 132, 1)
+            Height: =96
             Width: =Parent.Width
+      - FormCanvasEdit:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(252, 251, 247, 1)
+            Height: =Parent.Height - Self.Y - 24
+            Width: =Min(Parent.Width - 64, 1360)
+            X: =(Parent.Width - Self.Width) / 2
+            Y: =RectQuickActionBar3.Height + 24
       - MondrianRedBlockCancel:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(237, 28, 36, 1)
-            Height: =88
-            Width: =88
+            Height: =96
+            Width: =96
             X: =0
             Y: =0
       - MondrianYellowBlockSubmit:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(255, 222, 0, 1)
-            Height: =88
-            Width: =88
-            X: =Parent.Width - 88
+            Height: =96
+            Width: =96
+            X: =Parent.Width - 96
             Y: =0
       - BlackLineEditLeft:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(0, 0, 0, 1)
-            Height: =88
+            Height: =96
             Width: =3
-            X: =88
+            X: =96
             Y: =0
       - BlackLineEditRight:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(0, 0, 0, 1)
-            Height: =88
+            Height: =96
             Width: =3
-            X: =Parent.Width - 88
+            X: =Parent.Width - 96
             Y: =0
       - HeaderBottomLineEdit:
           Control: Rectangle@2.3.0
@@ -49,14 +59,14 @@ Screens:
             Height: =3
             Width: =Parent.Width
             X: =0
-            Y: =85
+            Y: =93
       - IconCancel1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(255, 255, 255, 1)
-            Height: =88
+            Height: =96
             Icon: =Icon.Cancel
             OnSelect: =ResetForm(EditForm1);Back()
             PaddingBottom: =22
@@ -66,14 +76,14 @@ Screens:
             PressedFill: =RGBA(255, 255, 255, 0.3)
             TabIndex: =0
             Tooltip: ="取消項目"
-            Width: =88
+            Width: =96
       - IconAccept1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(0, 0, 0, 1)
-            Height: =88
+            Height: =96
             Icon: =Icon.Check
             OnSelect: =SubmitForm(EditForm1)
             PaddingBottom: =22
@@ -83,7 +93,7 @@ Screens:
             PressedFill: =RGBA(0, 0, 0, 0.2)
             TabIndex: =0
             Tooltip: ="送出項目"
-            Width: =88
+            Width: =96
             X: =Parent.Width - Self.Width
       - LblAppName3:
           Control: Label@2.5.1
@@ -92,9 +102,9 @@ Screens:
             Color: =RGBA(255, 255, 255, 1)
             Fill: =RGBA(58, 58, 58, 0)
             Font: =Font.'Open Sans'
-            Height: =88
-            Size: =27
-            Text: ="請款單"
+            Height: =96
+            Size: =If(Parent.Width >= 1200, 30, 24)
+            Text: ="請款單 / 編輯"
             Width: =Parent.Width - IconCancel1.Width - IconAccept1.Width
             Wrap: =false
             X: =IconCancel1.X + IconCancel1.Width
@@ -104,12 +114,16 @@ Screens:
           Layout: Vertical
           Properties:
             BorderColor: =RGBA(0, 0, 0, 1)
+            Columns: =If(Parent.Width >= 1200, 2, 1)
             DataSource: =[@請款單]
-            Height: =Parent.Height - EditForm1.Y
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Parent.Height - EditForm1.Y - 24
             Item: =BrowseGallery1.Selected
             OnSuccess: =Back()
-            Width: =Parent.Width
-            Y: =RectQuickActionBar3.Height
+            SnapToColumns: =true
+            Width: =Min(Parent.Width - 64, 1360)
+            X: =(Parent.Width - Self.Width) / 2
+            Y: =RectQuickActionBar3.Height + 24
           Children:
             - 申請人_DataCard2:
                 Control: TypedDataCard@1.0.7
@@ -213,8 +227,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6027__x8cea_')
                   Required: =false
                   Update: =DataCardValue10.Selected
-                  X: =0
-                  Y: =1
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 0, 1)
                 Children:
                   - DataCardKey10:
                       Control: Label@2.5.1
@@ -307,7 +321,8 @@ Screens:
                   Required: =false
                   Update: =DataCardValue11.Text
                   X: =0
-                  Y: =2
+                  Y: =If(Parent.Width >= 1200, 1, 2)
+                  Width: =Parent.Width
                 Children:
                   - DataCardKey11:
                       Control: Label@2.5.1
@@ -391,7 +406,7 @@ Screens:
                   Required: =false
                   Update: =DataCardValue12.Selected
                   X: =0
-                  Y: =3
+                  Y: =If(Parent.Width >= 1200, 2, 3)
                 Children:
                   - DataCardKey12:
                       Control: Label@2.5.1
@@ -482,8 +497,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x5be6__x4ed8__x7e3d__x984d__x00')
                   Required: =false
                   Update: =Value(DataCardValue13.Text)
-                  X: =0
-                  Y: =4
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 2, 4)
                 Children:
                   - DataCardKey13:
                       Control: Label@2.5.1
@@ -567,7 +582,7 @@ Screens:
                   Required: =false
                   Update: =If(Not IsBlank(DateValue1.SelectedDate), DateTime(Year(DateValue1.SelectedDate), Month(DateValue1.SelectedDate), Day(DateValue1.SelectedDate), Value(HourValue1.Selected.Value), Value(MinuteValue1.Selected.Value), 0))
                   X: =0
-                  Y: =5
+                  Y: =If(Parent.Width >= 1200, 3, 5)
                 Children:
                   - DataCardKey14:
                       Control: Label@2.5.1
@@ -722,8 +737,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x652f__x7968__x5230__x671f__x65')
                   Required: =false
                   Update: =If(Not IsBlank(DateValue2.SelectedDate), DateTime(Year(DateValue2.SelectedDate), Month(DateValue2.SelectedDate), Day(DateValue2.SelectedDate), Value(HourValue2.Selected.Value), Value(MinuteValue2.Selected.Value), 0))
-                  X: =0
-                  Y: =6
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 3, 6)
                 Children:
                   - DataCardKey15:
                       Control: Label@2.5.1
@@ -879,7 +894,7 @@ Screens:
                   Required: =false
                   Update: =DataCardValue15.SelectedDate
                   X: =0
-                  Y: =7
+                  Y: =If(Parent.Width >= 1200, 4, 7)
                 Children:
                   - DataCardKey17:
                       Control: Label@2.5.1
@@ -961,8 +976,8 @@ Screens:
                   MaxLength: =DataSourceInfo([@請款單], DataSourceInfo.MaxLength, 'OData__x9280__x884c__x540d__x7a31_')
                   Required: =false
                   Update: =DataCardValue14.Text
-                  X: =0
-                  Y: =8
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 4, 8)
                 Children:
                   - DataCardKey16:
                       Control: Label@2.5.1
@@ -1047,7 +1062,7 @@ Screens:
                   Required: =false
                   Update: =DataCardValue16.Text
                   X: =0
-                  Y: =9
+                  Y: =If(Parent.Width >= 1200, 5, 9)
                 Children:
                   - DataCardKey18:
                       Control: Label@2.5.1
@@ -1131,8 +1146,8 @@ Screens:
                   MaxLength: =DataSourceInfo([@請款單], DataSourceInfo.MaxLength, 'OData__x9280__x884c__x4ee3__x78bc_')
                   Required: =false
                   Update: =DataCardValue17.Text
-                  X: =0
-                  Y: =10
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 5, 10)
                 Children:
                   - DataCardKey19:
                       Control: Label@2.5.1
@@ -1217,7 +1232,7 @@ Screens:
                   Required: =false
                   Update: =DataCardValue18.Text
                   X: =0
-                  Y: =11
+                  Y: =If(Parent.Width >= 1200, 6, 11)
                 Children:
                   - DataCardKey20:
                       Control: Label@2.5.1
@@ -1300,8 +1315,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6838__x92b7__x55ae__x64da_')
                   Required: =false
                   Update: =DataCardValue19.Selected
-                  X: =0
-                  Y: =12
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 6, 12)
                 Children:
                   - DataCardKey21:
                       Control: Label@2.5.1
@@ -1392,7 +1407,8 @@ Screens:
                   Required: =false
                   Update: =DataCardValue20.Text
                   X: =0
-                  Y: =13
+                  Y: =If(Parent.Width >= 1200, 7, 13)
+                  Width: =Parent.Width
                 Children:
                   - DataCardKey22:
                       Control: Label@2.5.1
@@ -1476,7 +1492,7 @@ Screens:
                   Required: =false
                   Update: =If(Not IsBlank(DateValue3.SelectedDate), DateTime(Year(DateValue3.SelectedDate), Month(DateValue3.SelectedDate), Day(DateValue3.SelectedDate), Value(HourValue3.Selected.Value), Value(MinuteValue3.Selected.Value), 0))
                   X: =0
-                  Y: =14
+                  Y: =If(Parent.Width >= 1200, 8, 14)
                 Children:
                   - DataCardKey23:
                       Control: Label@2.5.1
@@ -1632,7 +1648,8 @@ Screens:
                   Required: =false
                   Update: =DataCardValue22.Attachments
                   X: =0
-                  Y: =15
+                  Y: =If(Parent.Width >= 1200, 9, 15)
+                  Width: =Parent.Width
                 Children:
                   - DataCardKey25:
                       Control: Label@2.5.1

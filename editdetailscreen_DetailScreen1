@@ -1,6 +1,7 @@
 Screens:
   DetailScreen1:
     Properties:
+      Fill: =RGBA(242, 241, 236, 1)
       LoadingSpinnerColor: =RGBA(237, 28, 36, 1)
     Children:
       # ═══ 蒙德里安風格 Header ═══
@@ -9,44 +10,53 @@ Screens:
           Control: Rectangle@2.3.0
           Properties:
             BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(0, 87, 183, 1)
-            Height: =88
+            Fill: =RGBA(11, 74, 132, 1)
+            Height: =96
             Width: =Parent.Width
+      - FormCanvasDetail:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(252, 251, 247, 1)
+            Height: =Parent.Height - Self.Y - 24
+            Width: =Min(Parent.Width - 64, 1360)
+            X: =(Parent.Width - Self.Width) / 2
+            Y: =RectQuickActionBar2.Height + 24
       # 右側紅色塊（刪除操作區）
       - MondrianRedBlockDelete:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(237, 28, 36, 1)
-            Height: =88
-            Width: =88
-            X: =Parent.Width - 176
+            Height: =96
+            Width: =96
+            X: =Parent.Width - 192
             Y: =0
       # 右側黃色塊（編輯操作區）
       - MondrianYellowBlockEdit:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(255, 222, 0, 1)
-            Height: =88
-            Width: =88
-            X: =Parent.Width - 88
+            Height: =96
+            Width: =96
+            X: =Parent.Width - 96
             Y: =0
       # 黑色垂直分割線（藍｜紅）
       - BlackLineDetailLeft:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(0, 0, 0, 1)
-            Height: =88
+            Height: =96
             Width: =3
-            X: =Parent.Width - 176
+            X: =Parent.Width - 192
             Y: =0
       # 黑色垂直分割線（紅｜黃）
       - BlackLineDetailRight:
           Control: Rectangle@2.3.0
           Properties:
             Fill: =RGBA(0, 0, 0, 1)
-            Height: =88
+            Height: =96
             Width: =3
-            X: =Parent.Width - 88
+            X: =Parent.Width - 96
             Y: =0
       # Header 底部黑色水平線
       - HeaderBottomLineDetail:
@@ -56,7 +66,7 @@ Screens:
             Height: =3
             Width: =Parent.Width
             X: =0
-            Y: =85
+            Y: =93
       # ═══ 功能按鈕（疊在色塊之上）═══
       - IconBackarrow1:
           Control: Classic/Icon@2.5.0
@@ -64,7 +74,7 @@ Screens:
             AccessibleLabel: =Self.Tooltip
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(255, 255, 255, 1)
-            Height: =88
+            Height: =96
             Icon: =Icon.ChevronLeft
             OnSelect: =Navigate(BrowseScreen1, ScreenTransition.None)
             PaddingBottom: =24
@@ -74,7 +84,7 @@ Screens:
             PressedFill: =RGBA(255, 255, 255, 0.3)
             TabIndex: =0
             Tooltip: ="返回清單"
-            Width: =88
+            Width: =96
       - IconEdit1:
           Control: Classic/Icon@2.5.0
           Properties:
@@ -82,7 +92,7 @@ Screens:
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(0, 0, 0, 1)
             DisplayMode: =If(DataSourceInfo([@請款單], DataSourceInfo.EditPermission), DisplayMode.Edit, DisplayMode.Disabled)
-            Height: =88
+            Height: =96
             Icon: =Icon.Edit
             OnSelect: =EditForm(EditForm1);Navigate(EditScreen1, ScreenTransition.None)
             PaddingBottom: =24
@@ -92,7 +102,7 @@ Screens:
             PressedFill: =RGBA(0, 0, 0, 0.2)
             TabIndex: =0
             Tooltip: ="編輯此項目"
-            Width: =88
+            Width: =96
             X: =Parent.Width - Self.Width
       - IconDelete1:
           Control: Classic/Icon@2.5.0
@@ -101,7 +111,7 @@ Screens:
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(255, 255, 255, 1)
             DisplayMode: =If(!IsBlank(BrowseGallery1.Selected) && DataSourceInfo([@請款單], DataSourceInfo.DeletePermission), DisplayMode.Edit, DisplayMode.Disabled)
-            Height: =88
+            Height: =96
             Icon: =Icon.Trash
             OnSelect: =Remove([@請款單], BrowseGallery1.Selected); If (IsEmpty(Errors([@請款單], BrowseGallery1.Selected)), Back())
             PaddingBottom: =24
@@ -111,7 +121,7 @@ Screens:
             PressedFill: =RGBA(255, 255, 255, 0.3)
             TabIndex: =0
             Tooltip: ="刪除此項目"
-            Width: =88
+            Width: =96
             X: =Parent.Width - IconEdit1.Width - Self.Width
       - LblAppName2:
           Control: Label@2.5.1
@@ -119,9 +129,9 @@ Screens:
             BorderColor: =RGBA(0, 0, 0, 1)
             Color: =RGBA(255, 255, 255, 1)
             Font: =Font.'Open Sans'
-            Height: =88
-            Size: =27
-            Text: ="請款單"
+            Height: =96
+            Size: =If(Parent.Width >= 1200, 30, 24)
+            Text: ="請款單 / 明細"
             Width: =Parent.Width - Self.X - IconDelete1.Width - IconEdit1.Width
             Wrap: =false
             X: =IconBackarrow1.X + IconBackarrow1.Width
@@ -131,11 +141,15 @@ Screens:
           Layout: Vertical
           Properties:
             BorderColor: =RGBA(0, 0, 0, 1)
+            Columns: =If(Parent.Width >= 1200, 2, 1)
             DataSource: =[@請款單]
-            Height: =Parent.Height - DetailForm1.Y
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =Parent.Height - DetailForm1.Y - 24
             Item: =BrowseGallery1.Selected
-            Width: =Parent.Width
-            Y: =RectQuickActionBar2.Y + RectQuickActionBar2.Height
+            SnapToColumns: =true
+            Width: =Min(Parent.Width - 64, 1360)
+            X: =(Parent.Width - Self.Width) / 2
+            Y: =RectQuickActionBar2.Y + RectQuickActionBar2.Height + 24
           Children:
             - 申請人_DataCard1:
                 Control: TypedDataCard@1.0.7
@@ -238,8 +252,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6027__x8cea_')
                   Required: =false
                   Update: =DataCardValue2.Selected
-                  X: =0
-                  Y: =1
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 0, 1)
                 Children:
                   - DataCardKey2:
                       Control: Label@2.5.1
@@ -329,7 +343,8 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x8acb__x6b3e__x8aaa__x660e_')
                   Required: =false
                   X: =0
-                  Y: =2
+                  Y: =If(Parent.Width >= 1200, 1, 2)
+                  Width: =Parent.Width
                 Children:
                   - DataCardKey3:
                       Control: Label@2.5.1
@@ -373,7 +388,7 @@ Screens:
                   Required: =false
                   Update: =DataCardValue4.Selected
                   X: =0
-                  Y: =3
+                  Y: =If(Parent.Width >= 1200, 2, 3)
                 Children:
                   - DataCardKey4:
                       Control: Label@2.5.1
@@ -462,8 +477,8 @@ Screens:
                   Default: =ThisItem.'實付總額(新台幣)'
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x5be6__x4ed8__x7e3d__x984d__x00')
                   Required: =false
-                  X: =0
-                  Y: =4
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 2, 4)
                 Children:
                   - DataCardKey5:
                       Control: Label@2.5.1
@@ -506,7 +521,7 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x532f__x6b3e__x671f__x9650__x65')
                   Required: =false
                   X: =0
-                  Y: =5
+                  Y: =If(Parent.Width >= 1200, 3, 5)
                 Children:
                   - DataCardKey6:
                       Control: Label@2.5.1
@@ -548,8 +563,8 @@ Screens:
                   Default: =ThisItem.支票到期日
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x652f__x7968__x5230__x671f__x65')
                   Required: =false
-                  X: =0
-                  Y: =6
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 3, 6)
                 Children:
                   - DataCardKey7:
                       Control: Label@2.5.1
@@ -592,7 +607,7 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x9280__x884c__x540d__x7a31_')
                   Required: =false
                   X: =0
-                  Y: =7
+                  Y: =If(Parent.Width >= 1200, 4, 7)
                 Children:
                   - DataCardKey8:
                       Control: Label@2.5.1
@@ -634,8 +649,8 @@ Screens:
                   Default: =ThisItem.案號
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6848__x865f_')
                   Required: =false
-                  X: =0
-                  Y: =8
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 4, 8)
                 Children:
                   - DataCardKey26:
                       Control: Label@2.5.1
@@ -678,7 +693,7 @@ Screens:
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x53d7__x6b3e__x4eba__x59d3__x54')
                   Required: =false
                   X: =0
-                  Y: =9
+                  Y: =If(Parent.Width >= 1200, 5, 9)
                 Children:
                   - DataCardKey27:
                       Control: Label@2.5.1
@@ -720,8 +735,8 @@ Screens:
                   Default: =ThisItem.'受款人/支票抬頭'
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x53d7__x6b3e__x4eba__x002f__x65')
                   Required: =false
-                  X: =0
-                  Y: =10
+                  X: =If(Parent.Width >= 1200, 1, 0)
+                  Y: =If(Parent.Width >= 1200, 5, 10)
                 Children:
                   - DataCardKey28:
                       Control: Label@2.5.1
