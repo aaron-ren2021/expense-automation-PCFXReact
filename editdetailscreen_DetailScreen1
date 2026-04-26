@@ -1,136 +1,138 @@
 Screens:
   DetailScreen1:
     Properties:
-      Fill: =RGBA(242, 241, 236, 1)
-      LoadingSpinnerColor: =RGBA(237, 28, 36, 1)
+      Fill: =RGBA(244, 246, 241, 1)
+      LoadingSpinnerColor: =RGBA(209, 59, 53, 1)
     Children:
       # ═══ 蒙德里安風格 Header ═══
       # 底層：主體藍色 ActionBar
       - RectQuickActionBar2:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(11, 74, 132, 1)
-            Height: =96
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(18, 61, 101, 1)
+            Height: =88
             Width: =Parent.Width
       - FormCanvasDetail:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(252, 251, 247, 1)
-            Height: =Parent.Height - Self.Y - 24
-            Width: =Min(Parent.Width - 64, 1360)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 252, 1)
+            Height: =Parent.Height - Self.Y - 32
+            Width: =Min(Parent.Width - 56, 1320)
             X: =(Parent.Width - Self.Width) / 2
             Y: =RectQuickActionBar2.Height + 24
       # 右側紅色塊（刪除操作區）
       - MondrianRedBlockDelete:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(237, 28, 36, 1)
-            Height: =96
-            Width: =96
-            X: =Parent.Width - 192
+            Fill: =RGBA(209, 59, 53, 1)
+            Height: =88
+            Width: =88
+            X: =Parent.Width - 176
             Y: =0
       # 右側黃色塊（編輯操作區）
       - MondrianYellowBlockEdit:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(255, 222, 0, 1)
-            Height: =96
-            Width: =96
-            X: =Parent.Width - 96
+            Fill: =RGBA(242, 201, 76, 1)
+            Height: =88
+            Width: =88
+            X: =Parent.Width - 88
             Y: =0
       # 黑色垂直分割線（藍｜紅）
       - BlackLineDetailLeft:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =96
-            Width: =3
-            X: =Parent.Width - 192
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =88
+            Width: =1
+            X: =Parent.Width - 176
             Y: =0
       # 黑色垂直分割線（紅｜黃）
       - BlackLineDetailRight:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =96
-            Width: =3
-            X: =Parent.Width - 96
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =88
+            Width: =1
+            X: =Parent.Width - 88
             Y: =0
       # Header 底部黑色水平線
       - HeaderBottomLineDetail:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =3
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =1
             Width: =Parent.Width
             X: =0
-            Y: =93
+            Y: =87
       # ═══ 功能按鈕（疊在色塊之上）═══
       - IconBackarrow1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
-            Height: =96
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
+            Height: =88
             Icon: =Icon.ChevronLeft
             OnSelect: =Navigate(BrowseScreen1, ScreenTransition.None)
             PaddingBottom: =24
             PaddingLeft: =24
             PaddingRight: =24
             PaddingTop: =24
-            PressedFill: =RGBA(255, 255, 255, 0.3)
+            PressedFill: =RGBA(255, 255, 252, 0.28)
             TabIndex: =0
             Tooltip: ="返回清單"
-            Width: =96
+            Width: =88
       - IconEdit1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(0, 0, 0, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(32, 38, 43, 1)
             DisplayMode: =If(DataSourceInfo([@請款單], DataSourceInfo.EditPermission), DisplayMode.Edit, DisplayMode.Disabled)
-            Height: =96
+            Height: =88
             Icon: =Icon.Edit
             OnSelect: =EditForm(EditForm1);Navigate(EditScreen1, ScreenTransition.None)
             PaddingBottom: =24
             PaddingLeft: =24
             PaddingRight: =24
             PaddingTop: =24
-            PressedFill: =RGBA(0, 0, 0, 0.2)
+            PressedFill: =RGBA(32, 38, 43, 0.16)
             TabIndex: =0
             Tooltip: ="編輯此項目"
-            Width: =96
+            Width: =88
             X: =Parent.Width - Self.Width
       - IconDelete1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
             DisplayMode: =If(!IsBlank(BrowseGallery1.Selected) && DataSourceInfo([@請款單], DataSourceInfo.DeletePermission), DisplayMode.Edit, DisplayMode.Disabled)
-            Height: =96
+            Height: =88
             Icon: =Icon.Trash
             OnSelect: =Remove([@請款單], BrowseGallery1.Selected); If (IsEmpty(Errors([@請款單], BrowseGallery1.Selected)), Back())
             PaddingBottom: =24
             PaddingLeft: =24
             PaddingRight: =24
             PaddingTop: =24
-            PressedFill: =RGBA(255, 255, 255, 0.3)
+            PressedFill: =RGBA(255, 255, 252, 0.28)
             TabIndex: =0
             Tooltip: ="刪除此項目"
-            Width: =96
+            Width: =88
             X: =Parent.Width - IconEdit1.Width - Self.Width
       - LblAppName2:
           Control: Label@2.5.1
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
             Font: =Font.'Open Sans'
-            Height: =96
-            Size: =If(Parent.Width >= 1200, 30, 24)
+            Height: =88
+            Size: =If(Parent.Width >= 1200, 27, 22)
             Text: ="請款單 / 明細"
             Width: =Parent.Width - Self.X - IconDelete1.Width - IconEdit1.Width
             Wrap: =false
@@ -140,14 +142,15 @@ Screens:
           Control: FormViewer@2.3.4
           Layout: Vertical
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
             Columns: =If(Parent.Width >= 1200, 2, 1)
             DataSource: =[@請款單]
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =Parent.Height - DetailForm1.Y - 24
+            Height: =Parent.Height - DetailForm1.Y - 32
             Item: =BrowseGallery1.Selected
             SnapToColumns: =true
-            Width: =Min(Parent.Width - 64, 1360)
+            Width: =Min(Parent.Width - 56, 1320)
             X: =(Parent.Width - Self.Width) / 2
             Y: =RectQuickActionBar2.Y + RectQuickActionBar2.Height + 24
           Children:
@@ -155,7 +158,8 @@ Screens:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicComboBoxView
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x7533__x8acb__x4eba__"
                   Default: =ThisItem.申請人
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x7533__x8acb__x4eba__')
@@ -169,8 +173,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -183,26 +187,27 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        ChevronBackground: =RGBA(0, 87, 183, 1)
-                        ChevronFill: =RGBA(255, 255, 255, 1)
-                        ChevronHoverBackground: =ColorFade(RGBA(0, 87, 183, 1), -20%)
-                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        BorderThickness: =1
+                        ChevronBackground: =RGBA(18, 61, 101, 1)
+                        ChevronFill: =RGBA(255, 255, 252, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(18, 61, 101, 1), -12%)
+                        ChevronHoverFill: =RGBA(255, 255, 252, 1)
                         DefaultSelectedItems: =Parent.Default
                         DisplayFields: =["DisplayName"]
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
-                        HoverFill: =RGBA(255, 222, 0, 0.15)
+                        HoverFill: =RGBA(242, 201, 76, 0.18)
                         Items: =Choices([@請款單].'OData__x7533__x8acb__x4eba__')
                         PaddingBottom: =5
                         PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                         PaddingRight: =5
                         PaddingTop: =5
-                        PressedColor: =RGBA(255, 255, 255, 1)
-                        PressedFill: =RGBA(0, 0, 0, 1)
+                        PressedColor: =RGBA(255, 255, 252, 1)
+                        PressedFill: =RGBA(32, 38, 43, 1)
                         SearchFields: =["DisplayName"]
                         SelectMultiple: =false
-                        SelectionColor: =RGBA(255, 255, 255, 1)
-                        SelectionFill: =RGBA(237, 28, 36, 1)
+                        SelectionColor: =RGBA(255, 255, 252, 1)
+                        SelectionFill: =RGBA(209, 59, 53, 1)
                         Width: =Parent.Width - 60
                         X: =30
                         Y: =DataCardKey1.Y + DataCardKey1.Height + 5
@@ -211,7 +216,7 @@ Screens:
                       MetadataKey: ErrorMessage
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         Color: =RGBA(168, 0, 0, 1)
                         Font: =Font.'Open Sans'
                         FontWeight: =FontWeight.Semibold
@@ -221,7 +226,7 @@ Screens:
                         PaddingLeft: =0
                         PaddingRight: =0
                         PaddingTop: =0
-                        Size: =24
+                        Size: =10
                         Text: =Parent.Error
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
@@ -232,8 +237,8 @@ Screens:
                       MetadataKey: FieldRequired
                       Properties:
                         Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(209, 59, 53, 1)
+                        Color: =RGBA(32, 38, 43, 1)
                         Font: =Font.'Open Sans'
                         Height: =DataCardKey1.Height
                         Text: ="*"
@@ -246,7 +251,8 @@ Screens:
                 Variant: ClassicComboBoxView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x6027__x8cea_"
                   Default: =ThisItem.性質
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6027__x8cea_')
@@ -260,8 +266,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -274,26 +280,27 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        ChevronBackground: =RGBA(0, 87, 183, 1)
-                        ChevronFill: =RGBA(255, 255, 255, 1)
-                        ChevronHoverBackground: =ColorFade(RGBA(0, 87, 183, 1), -20%)
-                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        BorderThickness: =1
+                        ChevronBackground: =RGBA(18, 61, 101, 1)
+                        ChevronFill: =RGBA(255, 255, 252, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(18, 61, 101, 1), -12%)
+                        ChevronHoverFill: =RGBA(255, 255, 252, 1)
                         DefaultSelectedItems: =Parent.Default
                         DisplayFields: =["Value"]
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
-                        HoverFill: =RGBA(255, 222, 0, 0.15)
+                        HoverFill: =RGBA(242, 201, 76, 0.18)
                         Items: =Choices([@請款單].'OData__x6027__x8cea_')
                         PaddingBottom: =5
                         PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                         PaddingRight: =5
                         PaddingTop: =5
-                        PressedColor: =RGBA(255, 255, 255, 1)
-                        PressedFill: =RGBA(0, 0, 0, 1)
+                        PressedColor: =RGBA(255, 255, 252, 1)
+                        PressedFill: =RGBA(32, 38, 43, 1)
                         SearchFields: =["Value"]
                         SelectMultiple: =false
-                        SelectionColor: =RGBA(255, 255, 255, 1)
-                        SelectionFill: =RGBA(237, 28, 36, 1)
+                        SelectionColor: =RGBA(255, 255, 252, 1)
+                        SelectionFill: =RGBA(209, 59, 53, 1)
                         Width: =Parent.Width - 60
                         X: =30
                         Y: =DataCardKey2.Y + DataCardKey2.Height + 5
@@ -302,7 +309,7 @@ Screens:
                       MetadataKey: ErrorMessage
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         Color: =RGBA(168, 0, 0, 1)
                         Font: =Font.'Open Sans'
                         FontWeight: =FontWeight.Semibold
@@ -312,7 +319,7 @@ Screens:
                         PaddingLeft: =0
                         PaddingRight: =0
                         PaddingTop: =0
-                        Size: =24
+                        Size: =10
                         Text: =Parent.Error
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
@@ -323,8 +330,8 @@ Screens:
                       MetadataKey: FieldRequired
                       Properties:
                         Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(209, 59, 53, 1)
+                        Color: =RGBA(32, 38, 43, 1)
                         Font: =Font.'Open Sans'
                         Height: =DataCardKey2.Height
                         Text: ="*"
@@ -337,7 +344,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x8acb__x6b3e__x8aaa__x660e_"
                   Default: =ThisItem.請款說明
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x8acb__x6b3e__x8aaa__x660e_')
@@ -351,8 +359,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -365,7 +373,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -381,7 +389,8 @@ Screens:
                 Variant: ClassicComboBoxView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x4ed8__x6b3e__x65b9__x5f0f_"
                   Default: =ThisItem.付款方式
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x4ed8__x6b3e__x65b9__x5f0f_')
@@ -395,8 +404,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -409,26 +418,27 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        ChevronBackground: =RGBA(0, 87, 183, 1)
-                        ChevronFill: =RGBA(255, 255, 255, 1)
-                        ChevronHoverBackground: =ColorFade(RGBA(0, 87, 183, 1), -20%)
-                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        BorderThickness: =1
+                        ChevronBackground: =RGBA(18, 61, 101, 1)
+                        ChevronFill: =RGBA(255, 255, 252, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(18, 61, 101, 1), -12%)
+                        ChevronHoverFill: =RGBA(255, 255, 252, 1)
                         DefaultSelectedItems: =Parent.Default
                         DisplayFields: =["Value"]
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
-                        HoverFill: =RGBA(255, 222, 0, 0.15)
+                        HoverFill: =RGBA(242, 201, 76, 0.18)
                         Items: =Choices([@請款單].'OData__x4ed8__x6b3e__x65b9__x5f0f_')
                         PaddingBottom: =5
                         PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                         PaddingRight: =5
                         PaddingTop: =5
-                        PressedColor: =RGBA(255, 255, 255, 1)
-                        PressedFill: =RGBA(0, 0, 0, 1)
+                        PressedColor: =RGBA(255, 255, 252, 1)
+                        PressedFill: =RGBA(32, 38, 43, 1)
                         SearchFields: =["Value"]
                         SelectMultiple: =false
-                        SelectionColor: =RGBA(255, 255, 255, 1)
-                        SelectionFill: =RGBA(237, 28, 36, 1)
+                        SelectionColor: =RGBA(255, 255, 252, 1)
+                        SelectionFill: =RGBA(209, 59, 53, 1)
                         Width: =Parent.Width - 60
                         X: =30
                         Y: =DataCardKey4.Y + DataCardKey4.Height + 5
@@ -437,7 +447,7 @@ Screens:
                       MetadataKey: ErrorMessage
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         Color: =RGBA(168, 0, 0, 1)
                         Font: =Font.'Open Sans'
                         FontWeight: =FontWeight.Semibold
@@ -447,7 +457,7 @@ Screens:
                         PaddingLeft: =0
                         PaddingRight: =0
                         PaddingTop: =0
-                        Size: =24
+                        Size: =10
                         Text: =Parent.Error
                         Visible: =Parent.DisplayMode=DisplayMode.Edit
                         Width: =Parent.Width - 60
@@ -458,8 +468,8 @@ Screens:
                       MetadataKey: FieldRequired
                       Properties:
                         Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(209, 59, 53, 1)
+                        Color: =RGBA(32, 38, 43, 1)
                         Font: =Font.'Open Sans'
                         Height: =DataCardKey4.Height
                         Text: ="*"
@@ -472,7 +482,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x5be6__x4ed8__x7e3d__x984d__x00"
                   Default: =ThisItem.'實付總額(新台幣)'
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x5be6__x4ed8__x7e3d__x984d__x00')
@@ -485,8 +496,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -499,7 +510,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -515,7 +526,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x532f__x6b3e__x671f__x9650__x65"
                   Default: =ThisItem.匯款期限日
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x532f__x6b3e__x671f__x9650__x65')
@@ -528,8 +540,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -542,7 +554,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -558,7 +570,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x652f__x7968__x5230__x671f__x65"
                   Default: =ThisItem.支票到期日
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x652f__x7968__x5230__x671f__x65')
@@ -571,8 +584,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -585,7 +598,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -601,7 +614,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x9280__x884c__x540d__x7a31_"
                   Default: =ThisItem.銀行名稱
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x9280__x884c__x540d__x7a31_')
@@ -614,8 +628,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -628,7 +642,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -644,7 +658,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x6848__x865f_"
                   Default: =ThisItem.案號
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x6848__x865f_')
@@ -657,8 +672,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -671,7 +686,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -687,7 +702,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x53d7__x6b3e__x4eba__x59d3__x54"
                   Default: =ThisItem.受款人姓名
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x53d7__x6b3e__x4eba__x59d3__x54')
@@ -700,8 +716,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -714,7 +730,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40
@@ -730,7 +746,8 @@ Screens:
                 Variant: ClassicTextualView
                 IsLocked: true
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
                   DataField: ="OData__x53d7__x6b3e__x4eba__x002f__x65"
                   Default: =ThisItem.'受款人/支票抬頭'
                   DisplayName: =DataSourceInfo([@請款單],DataSourceInfo.DisplayName,'OData__x53d7__x6b3e__x4eba__x002f__x65')
@@ -743,8 +760,8 @@ Screens:
                       MetadataKey: FieldName
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
-                        Color: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(18, 61, 101, 1)
+                        Color: =RGBA(18, 61, 101, 1)
                         Font: =Font.'Open Sans'
                         Height: =48
                         Text: =Parent.DisplayName
@@ -757,7 +774,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         AutoHeight: =true
-                        BorderColor: =RGBA(0, 0, 0, 1)
+                        BorderColor: =RGBA(32, 38, 43, 1)
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
                         Height: =40

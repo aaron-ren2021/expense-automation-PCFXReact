@@ -1,157 +1,161 @@
 Screens:
   BrowseScreen1:
     Properties:
-      Fill: =RGBA(242, 241, 236, 1)
-      LoadingSpinnerColor: =RGBA(237, 28, 36, 1)
+      Fill: =RGBA(244, 246, 241, 1)
+      LoadingSpinnerColor: =RGBA(209, 59, 53, 1)
     Children:
       # ═══ 蒙德里安風格 Header ═══
       # 底層：主體藍色 ActionBar
       - RectQuickActionBar1:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(11, 74, 132, 1)
-            Height: =96
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(18, 61, 101, 1)
+            Height: =88
             Width: =Parent.Width
       # 左側紅色塊（蒙德里安紅）
       - MondrianRedBlock:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(237, 28, 36, 1)
-            Height: =96
-            Width: =96
+            Fill: =RGBA(209, 59, 53, 1)
+            Height: =88
+            Width: =88
             X: =0
             Y: =0
       # 右側黃色塊（蒙德里安黃 - 新增按鈕區）
       - MondrianYellowBlock:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(255, 222, 0, 1)
-            Height: =96
-            Width: =96
-            X: =Parent.Width - 96
+            Fill: =RGBA(242, 201, 76, 1)
+            Height: =88
+            Width: =88
+            X: =Parent.Width - 88
             Y: =0
       # 黑色垂直分割線（紅｜藍）
       - BlackLine1:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =96
-            Width: =3
-            X: =96
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =88
+            Width: =1
+            X: =88
             Y: =0
       # 黑色垂直分割線（藍｜黃）
       - BlackLine2:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =96
-            Width: =3
-            X: =Parent.Width - 96
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =88
+            Width: =1
+            X: =Parent.Width - 88
             Y: =0
       # Header 底部黑色水平線
       - HeaderBottomLine:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =3
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =1
             Width: =Parent.Width
             X: =0
-            Y: =93
+            Y: =87
       - HeroWhitePanel:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(252, 251, 247, 1)
-            Height: =Parent.Height - Self.Y - 28
-            Width: =Min(Parent.Width - 48, 1320)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 252, 1)
+            Height: =Parent.Height - Self.Y - 32
+            Width: =Min(Parent.Width - 56, 1320)
             X: =(Parent.Width - Self.Width) / 2
-            Y: =116
+            Y: =112
       - BrowseLeftPanel:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(248, 247, 243, 1)
-            Height: =HeroWhitePanel.Height - 32
-            Width: =If(Parent.Width >= 1200, 430, HeroWhitePanel.Width - 32)
-            X: =HeroWhitePanel.X + 16
-            Y: =HeroWhitePanel.Y + 16
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(247, 248, 244, 1)
+            Height: =HeroWhitePanel.Height - 36
+            Width: =If(Parent.Width >= 1200, 440, HeroWhitePanel.Width - 36)
+            X: =HeroWhitePanel.X + 18
+            Y: =HeroWhitePanel.Y + 18
       - BrowsePreviewPanel:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(255, 255, 255, 1)
-            Height: =HeroWhitePanel.Height - 32
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(255, 255, 252, 1)
+            Height: =HeroWhitePanel.Height - 36
             Visible: =Parent.Width >= 1200
-            Width: =HeroWhitePanel.Width - BrowseLeftPanel.Width - 48
-            X: =BrowseLeftPanel.X + BrowseLeftPanel.Width + 16
+            Width: =HeroWhitePanel.Width - BrowseLeftPanel.Width - 54
+            X: =BrowseLeftPanel.X + BrowseLeftPanel.Width + 18
             Y: =BrowseLeftPanel.Y
       - PreviewRedBlock:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(237, 28, 36, 1)
-            Height: =64
+            Fill: =RGBA(209, 59, 53, 1)
+            Height: =58
             Visible: =BrowsePreviewPanel.Visible
-            Width: =64
+            Width: =58
             X: =BrowsePreviewPanel.X
             Y: =BrowsePreviewPanel.Y
       - PreviewBlueBlock:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(11, 74, 132, 1)
-            Height: =64
+            Fill: =RGBA(18, 61, 101, 1)
+            Height: =58
             Visible: =BrowsePreviewPanel.Visible
-            Width: =BrowsePreviewPanel.Width - 64
-            X: =BrowsePreviewPanel.X + 64
+            Width: =BrowsePreviewPanel.Width - 58
+            X: =BrowsePreviewPanel.X + 58
             Y: =BrowsePreviewPanel.Y
       - PreviewHeaderLine:
           Control: Rectangle@2.3.0
           Properties:
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =3
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =1
             Visible: =BrowsePreviewPanel.Visible
             Width: =BrowsePreviewPanel.Width
             X: =BrowsePreviewPanel.X
-            Y: =BrowsePreviewPanel.Y + 64
+            Y: =BrowsePreviewPanel.Y + 58
       # ═══ 標題與功能按鈕（疊在色塊之上）═══
       - LblAppName1:
           Control: Label@2.5.1
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
             Fill: =RGBA(58, 58, 58, 0)
             Font: =Font.'Open Sans'
-            Height: =96
-            Size: =If(Parent.Width >= 1200, 30, 24)
+            Height: =88
+            Size: =If(Parent.Width >= 1200, 27, 22)
             Text: ="請款單"
             Width: =Parent.Width - Self.X - IconSortUpDown1.Width - IconNewItem1.Width - IconRefresh1.Width
             Wrap: =false
-            X: =28
+            X: =24
       - IconRefresh1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
-            Height: =96
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
+            Height: =88
             Icon: =Icon.Reload
             OnSelect: =Refresh([@請款單])
             PaddingBottom: =22
             PaddingLeft: =22
             PaddingRight: =22
             PaddingTop: =22
-            PressedFill: =RGBA(255, 255, 255, 0.3)
+            PressedFill: =RGBA(255, 255, 252, 0.28)
             TabIndex: =0
             Tooltip: ="重新整理清單"
-            Width: =96
+            Width: =88
             X: =Parent.Width - IconNewItem1.Width - IconSortUpDown1.Width - Self.Width
       - IconSortUpDown1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
-            Height: =96
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
+            Height: =88
             Icon: =Icon.Sort
             OnSelect: |-
               =UpdateContext({SortDescending1: !SortDescending1})
@@ -159,57 +163,59 @@ Screens:
             PaddingLeft: =26
             PaddingRight: =26
             PaddingTop: =26
-            PressedFill: =RGBA(255, 255, 255, 0.3)
+            PressedFill: =RGBA(255, 255, 252, 0.28)
             TabIndex: =0
             Tooltip: =If(SortDescending1, "依反向的英數字母順序排序清單", "依英數字母順序排序清單")
-            Width: =96
+            Width: =88
             X: =Parent.Width - IconNewItem1.Width - Self.Width
       # 新增按鈕（黃色塊上，Icon 用黑色）
       - IconNewItem1:
           Control: Classic/Icon@2.5.0
           Properties:
             AccessibleLabel: =Self.Tooltip
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(0, 0, 0, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(32, 38, 43, 1)
             DisplayMode: =If(DataSourceInfo([@請款單], DataSourceInfo.CreatePermission), DisplayMode.Edit, DisplayMode.Disabled)
-            Height: =96
+            Height: =88
             Icon: =Icon.Add
             OnSelect: =NewForm(EditForm1);Navigate(EditScreen1, ScreenTransition.None)
             PaddingBottom: =24
             PaddingLeft: =24
             PaddingRight: =24
             PaddingTop: =24
-            PressedFill: =RGBA(0, 0, 0, 0.2)
+            PressedFill: =RGBA(32, 38, 43, 0.16)
             TabIndex: =0
             Tooltip: ="建立新項目"
-            Width: =96
+            Width: =88
             X: =Parent.Width - Self.Width
       # ═══ 搜尋欄 ═══
       - TextSearchBox1:
           Control: Classic/TextInput@2.3.2
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            BorderStyle: =BorderStyle.None
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            BorderStyle: =BorderStyle.Solid
             Default: =""
             DelayOutput: =true
+            Fill: =RGBA(255, 255, 252, 1)
             Font: =Font.'Open Sans'
-            Height: =64
+            Height: =58
             HintText: ="搜尋申請人、Email、性質或受款人"
-            HoverBorderColor: =RGBA(0, 0, 0, 1)
-            HoverFill: =RGBA(255, 222, 0, 0.08)
-            PaddingLeft: =70
-            RadiusBottomLeft: =0
-            RadiusBottomRight: =7
-            RadiusTopLeft: =0
-            RadiusTopRight: =7
+            HoverBorderColor: =RGBA(32, 38, 43, 1)
+            HoverFill: =RGBA(242, 201, 76, 0.16)
+            PaddingLeft: =64
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
             Width: =BrowseLeftPanel.Width - 32
             X: =BrowseLeftPanel.X + 16
             Y: =BrowseLeftPanel.Y + 16
       - SearchIcon1:
           Control: Classic/Icon@2.5.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(0, 87, 183, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(18, 61, 101, 1)
             Height: =Self.Width
             Icon: =Icon.Search
             PaddingBottom: =14
@@ -224,9 +230,10 @@ Screens:
       - Rectangle11:
           Control: Rectangle@2.3.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Fill: =RGBA(0, 0, 0, 1)
-            Height: =3
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
+            Fill: =RGBA(32, 38, 43, 1)
+            Height: =0
             Width: =TextSearchBox1.Width
             X: =TextSearchBox1.X
             Y: =TextSearchBox1.Y + TextSearchBox1.Height
@@ -235,31 +242,33 @@ Screens:
           Control: Gallery@2.15.0
           Variant: BrowseLayout_Vertical_ThreeTextVariant_ver5.0
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            BorderThickness: =1
             Height: =Parent.Height - Self.Y - 24
             Items: =SortByColumns(Filter([@請款單], IsBlank(TextSearchBox1.Text) || StartsWith(申請人.DisplayName, TextSearchBox1.Text) || StartsWith(申請人.Email, TextSearchBox1.Text) || StartsWith(性質.Value, TextSearchBox1.Text) || StartsWith('受款人/支票抬頭', TextSearchBox1.Text)), "ID", If(SortDescending1, SortOrder.Descending, SortOrder.Ascending))
             OnSelect: =Navigate(DetailScreen1, ScreenTransition.None)
             ShowScrollbar: =true
-            TemplateSize: =104
-            Width: =BrowseLeftPanel.Width - 16
-            X: =BrowseLeftPanel.X + 8
-            Y: =TextSearchBox1.Y + TextSearchBox1.Height + 16
+            TemplateSize: =112
+            Width: =BrowseLeftPanel.Width - 20
+            X: =BrowseLeftPanel.X + 10
+            Y: =TextSearchBox1.Y + TextSearchBox1.Height + 18
           Children:
             - ItemCardBackground:
                 Control: Rectangle@2.3.0
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Fill: =If(ThisItem.IsSelected, RGBA(255, 255, 255, 1), RGBA(248, 247, 243, 1))
-                  Height: =Parent.TemplateHeight - 16
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
+                  Fill: =If(ThisItem.IsSelected, RGBA(255, 255, 252, 1), RGBA(250, 250, 247, 1))
+                  Height: =Parent.TemplateHeight - 18
                   OnSelect: =Select(Parent)
-                  Width: =Parent.TemplateWidth - 18
-                  X: =9
-                  Y: =8
+                  Width: =Parent.TemplateWidth - 20
+                  X: =10
+                  Y: =9
             - Title1:
                 Control: Label@2.5.1
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Color: =RGBA(26, 26, 26, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  Color: =RGBA(32, 38, 43, 1)
                   Font: =Font.'Open Sans'
                   FontWeight: =If(ThisItem.IsSelected, FontWeight.Bold, FontWeight.Semibold)
                   Height: =32
@@ -268,17 +277,36 @@ Screens:
                   PaddingLeft: =0
                   PaddingRight: =0
                   PaddingTop: =0
-                  Size: =15
+                  Size: =14
                   Text: =ThisItem.申請人.DisplayName
                   VerticalAlign: =VerticalAlign.Top
                   Width: =Parent.TemplateWidth - 120
-                  X: =32
-                  Y: =20
+                  X: =34
+                  Y: =21
             - Subtitle1:
                 Control: Label@2.5.1
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Color: =RGBA(96, 96, 96, 1)
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  Color: =RGBA(105, 115, 125, 1)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Normal
+                  Height: =24
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =10
+                  Text: =Coalesce(ThisItem.性質.Value, "未分類") & "  ·  " & ThisItem.申請人.Email
+                  VerticalAlign: =VerticalAlign.Top
+                  Width: =Title1.Width
+                  X: =Title1.X
+                  Y: =Title1.Y + Title1.Height + 2
+            - Body1:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  Color: =RGBA(65, 72, 78, 1)
                   Font: =Font.'Open Sans'
                   FontWeight: =FontWeight.Normal
                   Height: =24
@@ -288,25 +316,6 @@ Screens:
                   PaddingRight: =0
                   PaddingTop: =0
                   Size: =11
-                  Text: =Coalesce(ThisItem.性質.Value, "未分類") & "  ·  " & ThisItem.申請人.Email
-                  VerticalAlign: =VerticalAlign.Top
-                  Width: =Title1.Width
-                  X: =Title1.X
-                  Y: =Title1.Y + Title1.Height + 2
-            - Body1:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Color: =RGBA(40, 40, 40, 1)
-                  Font: =Font.'Open Sans'
-                  FontWeight: =FontWeight.Normal
-                  Height: =24
-                  OnSelect: =Select(Parent)
-                  PaddingBottom: =0
-                  PaddingLeft: =0
-                  PaddingRight: =0
-                  PaddingTop: =0
-                  Size: =12
                   Text: =Coalesce(ThisItem.'受款人/支票抬頭', "未填寫受款資訊")
                   VerticalAlign: =VerticalAlign.Top
                   Width: =Title1.Width
@@ -316,9 +325,9 @@ Screens:
                 Control: Classic/Icon@2.5.0
                 Properties:
                   AccessibleLabel: =Self.Tooltip
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Color: =If(ThisItem.IsSelected, RGBA(237, 28, 36, 1), RGBA(120, 120, 120, 1))
-                  Height: =42
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  Color: =If(ThisItem.IsSelected, RGBA(209, 59, 53, 1), RGBA(116, 126, 136, 1))
+                  Height: =38
                   Icon: =Icon.ChevronRight
                   OnSelect: =Select(Parent)
                   PaddingBottom: =16
@@ -326,63 +335,65 @@ Screens:
                   PaddingRight: =16
                   PaddingTop: =16
                   Tooltip: ="檢視項目詳細資料"
-                  Width: =42
+                  Width: =38
                   X: =Parent.TemplateWidth - Self.Width - 24
-                  Y: =31
+                  Y: =37
             - Separator1:
                 Control: Rectangle@2.3.0
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Fill: =RGBA(242, 241, 236, 1)
-                  Height: =8
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
+                  Fill: =RGBA(244, 246, 241, 1)
+                  Height: =10
                   OnSelect: =Select(Parent)
                   Width: =Parent.TemplateWidth
                   Y: =Parent.TemplateHeight - Self.Height
             - Rectangle1:
                 Control: Rectangle@2.3.0
                 Properties:
-                  BorderColor: =RGBA(0, 0, 0, 1)
-                  Fill: =RGBA(237, 28, 36, 1)
-                  Height: =Parent.TemplateHeight - 24
+                  BorderColor: =RGBA(32, 38, 43, 1)
+                  BorderThickness: =1
+                  Fill: =RGBA(209, 59, 53, 1)
+                  Height: =Parent.TemplateHeight - 28
                   OnSelect: =Select(Parent)
                   Visible: =ThisItem.IsSelected
-                  Width: =4
-                  X: =9
-                  Y: =12
+                  Width: =5
+                  X: =10
+                  Y: =14
       - PreviewTitle:
           Control: Label@2.5.1
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(255, 255, 255, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(255, 255, 252, 1)
             Font: =Font.'Open Sans'
             FontWeight: =FontWeight.Bold
-            Height: =64
-            Size: =24
+            Height: =58
+            Size: =22
             Text: =Coalesce(BrowseGallery1.Selected.申請人.DisplayName, "請選擇一筆請款資料")
             Visible: =BrowsePreviewPanel.Visible
-            Width: =BrowsePreviewPanel.Width - 88
-            X: =BrowsePreviewPanel.X + 84
+            Width: =BrowsePreviewPanel.Width - 86
+            X: =BrowsePreviewPanel.X + 76
             Y: =BrowsePreviewPanel.Y
       - PreviewSectionTitle:
           Control: Label@2.5.1
           Properties:
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(30, 30, 30, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(18, 61, 101, 1)
             Font: =Font.'Open Sans'
             FontWeight: =FontWeight.Semibold
             Height: =32
-            Size: =14
+            Size: =13
             Text: ="目前選取摘要"
             Visible: =BrowsePreviewPanel.Visible
             Width: =220
             X: =BrowsePreviewPanel.X + 32
-            Y: =BrowsePreviewPanel.Y + 92
+            Y: =BrowsePreviewPanel.Y + 88
       - PreviewFieldApplicant:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(60, 60, 60, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(65, 72, 78, 1)
             Font: =Font.'Open Sans'
             Height: =40
             Size: =12
@@ -395,8 +406,8 @@ Screens:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(60, 60, 60, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(65, 72, 78, 1)
             Font: =Font.'Open Sans'
             Height: =40
             Size: =12
@@ -409,8 +420,8 @@ Screens:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(60, 60, 60, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(65, 72, 78, 1)
             Font: =Font.'Open Sans'
             Height: =40
             Size: =12
@@ -423,8 +434,8 @@ Screens:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(60, 60, 60, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(65, 72, 78, 1)
             Font: =Font.'Open Sans'
             Height: =40
             Size: =12
@@ -437,8 +448,8 @@ Screens:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(30, 30, 30, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(18, 61, 101, 1)
             Font: =Font.'Open Sans'
             FontWeight: =FontWeight.Semibold
             Height: =44
@@ -452,8 +463,8 @@ Screens:
           Control: Label@2.5.1
           Properties:
             AutoHeight: =true
-            BorderColor: =RGBA(0, 0, 0, 1)
-            Color: =RGBA(70, 70, 70, 1)
+            BorderColor: =RGBA(32, 38, 43, 1)
+            Color: =RGBA(65, 72, 78, 1)
             Font: =Font.'Open Sans'
             Height: =100
             Size: =12
